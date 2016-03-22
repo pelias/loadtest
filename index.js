@@ -5,19 +5,33 @@ var loadtest = require('loadtest');
 var filename = process.argv[2];
 var baseurl = process.argv[3];
 
+/*
+ * Called after every request returns.
+ * Used to print out how many queries have been run
+ *
+ * Note, it seems to be called AFTER the final results are sent off,
+ * so there is some trickery to make it do nothing on the last request
+ */
 function statusCallback(results) {
-  process.stderr.write("\r" + results.totalRequests);
-
-  if (results.totalRequests == urls.length) {
-    process.stderr.write("\n");
+  if (results.totalRequests == options.maxRequests) {
+    return;
   }
+
+  if (results.totalRequests == options.maxRequests -1) {
+    process.stdout.write("\r");
+    return;
+  }
+
+  process.stdout.write("\r" + results.totalRequests);
 }
 
+// read an entire file of urls into an array
 var urls = fs.readFileSync(filename).toString().split("\n").filter(function(string) { return string.length > 0; });
 
 var api_key = 'CHANGEME';
 var end = '&cachebust=' + Math.random() + '&api_key=' + api_key;
 
+// generate requests using the urls from the file
 var i = 0;
 function requestGenerator(params, options, client, callback) {
   var url = baseurl + urls[ i % urls.length] + end;
@@ -29,18 +43,30 @@ function requestGenerator(params, options, client, callback) {
 
 var options = {
   url: 'http://pelias.dev.mapzen.com/v1/',
-  maxRequests: 1000, //urls.length,
+  maxRequests: Math.min(1000, urls.length),
   concurrency: 5,
   statusCallback: statusCallback,
   requestGenerator: requestGenerator
 };
 
 
+// display info at the end of the load test
 loadtest.loadTest(options, function(error, result) {
   if (error) {
     return console.error('Got an error: %s', error);
   }
-  console.log('Tests run successfully');
 
-  console.log(result);
+  var error_count = Object.keys(result.errorCodes).reduce(function(acc, i) {
+    return result.errorCodes[i] + acc;
+  }, 0);
+
+  process.stdout.write('URL: ' + baseurl + '\n');
+  process.stdout.write('file: ' + filename + '\n');
+  process.stdout.write('count: ' + options.maxRequests + '\n');
+  process.stdout.write('errors: ' + error_count + '\n');
+  process.stdout.write('rps:  ' + result.rps + '\n');
+  process.stdout.write('50th: ' + result.percentiles[50] + "ms\n");
+  process.stdout.write('90th: ' + result.percentiles[90] + "ms\n");
+  process.stdout.write('99th: ' + result.percentiles[99] + "ms\n");
+  process.stdout.write('max:  ' + result.maxLatencyMs + "ms\n");
 });
