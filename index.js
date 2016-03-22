@@ -1,26 +1,26 @@
-var loadtest = require( 'loadtest' );
+var fs = require('fs');
 
+var loadtest = require('loadtest');
 
+var filename = process.argv[2];
+var baseurl = process.argv[3];
 
 function statusCallback(results) {
-  //console.log(results.totalRequests);
-  //console.log(arguments);
-  //console.log('Current latency %j, result %j', latency, error ? JSON.stringify(error) + result.toString() : result);
-  //console.log('----');
-  //console.log('Request elapsed milliseconds: ', error ? error.requestElapsed : result.requestElapsed);
-  //console.log('Request index: ', error ? error.requestIndex : result.requestIndex);
-  //console.log('Request loadtest() instance index: ', error ? error.instanceIndex : result.instanceIndex);
+  process.stderr.write("\r" + results.totalRequests);
+
+  if (results.totalRequests == urls.length) {
+    process.stderr.write("\n");
+  }
 }
 
-var urls = [
-  'http://pelias.dev.mapzen.com/v1/search?text=london',
-  'http://pelias.dev.mapzen.com/v1/search?text=san francisco',
-];
+var urls = fs.readFileSync(filename).toString().split("\n").filter(function(string) { return string.length > 0; });
 
+var api_key = 'CHANGEME';
+var end = '&cachebust=' + Math.random() + '&api_key=' + api_key;
 
 var i = 0;
 function requestGenerator(params, options, client, callback) {
-  var url = urls[i % urls.length];
+  var url = baseurl + urls[ i % urls.length] + end;
   i++;
   var request = client(url, callback);
 
@@ -29,7 +29,7 @@ function requestGenerator(params, options, client, callback) {
 
 var options = {
   url: 'http://pelias.dev.mapzen.com/v1/',
-  maxRequests: 100,
+  maxRequests: 1000, //urls.length,
   concurrency: 5,
   statusCallback: statusCallback,
   requestGenerator: requestGenerator
