@@ -1,0 +1,24 @@
+{
+  "name": "pelias-loadtest",
+  "version": "1.0.0",
+  "description": "Load testing scripts for Pelias",
+  "main": "index.js",
+  "dependencies": {
+    "byline": "^4.2.1",
+    "loadtest": "^1.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pelias/loadtest.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pelias/loadtest/issues"
+  },
+  "homepage": "https://github.com/pelias/loadtest#readme"
+}
