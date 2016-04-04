@@ -12,7 +12,15 @@ var baseurl = process.argv[3];
  * Note, it seems to be called AFTER the final results are sent off,
  * so there is some trickery to make it do nothing on the last request
  */
-function statusCallback(results) {
+
+var slowest_time = 0;
+var slowest_url;
+
+function statusCallback(results, result) {
+  if (result.requestElapsed > slowest_time) {
+    slowest_time = result.requestElapsed;
+    slowest_url = urls[result.requestIndex];
+  }
   if (results.totalRequests == options.maxRequests) {
     return;
   }
@@ -69,4 +77,5 @@ loadtest.loadTest(options, function(error, result) {
   process.stdout.write('90th: ' + result.percentiles[90] + "ms\n");
   process.stdout.write('99th: ' + result.percentiles[99] + "ms\n");
   process.stdout.write('max:  ' + result.maxLatencyMs + "ms\n");
+  process.stdout.write('slowest query: ' + slowest_url + "\n");
 });
