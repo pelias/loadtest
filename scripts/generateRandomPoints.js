@@ -1,3 +1,6 @@
+/*
+ * Generate a bunch of reverse queries, with points within a given bounding box
+ */
 var baseQuery = '/v1/reverse?point.lat=%d&point.lon=%d';
 
 var query_count = 10000;
