@@ -5,6 +5,11 @@ var loadtest = require('loadtest');
 var filename = process.argv[2];
 var baseurl = process.argv[3];
 
+// CONFIGURATON SECTION: EDIT THESE! :)
+var api_key = 'CHANGEME';
+var concurrency = 15;
+var maxRequests = 1000;
+
 /*
  * Called after every request returns.
  * Used to print out how many queries have been run
@@ -36,7 +41,6 @@ function statusCallback(results, result) {
 // read an entire file of urls into an array
 var urls = fs.readFileSync(filename).toString().split("\n").filter(function(string) { return string.length > 0; });
 
-var api_key = 'CHANGEME';
 var end = '&cachebust=' + Math.random() + '&api_key=' + api_key;
 
 // generate requests using the urls from the file
@@ -51,8 +55,8 @@ function requestGenerator(params, options, client, callback) {
 
 var options = {
   url: 'http://pelias.dev.mapzen.com/v1/',
-  maxRequests: Math.min(1000, urls.length),
-  concurrency: 5,
+  maxRequests: Math.min(maxRequests, urls.length),
+  concurrency: concurrency,
   statusCallback: statusCallback,
   requestGenerator: requestGenerator
 };
