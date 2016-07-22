@@ -4,9 +4,9 @@
 
 `node index.js [file with URL fragments] [endpoint]`
 
-example command: `node index.js acceptance_tests.txt 'http://pelias.dev.mapzen.com'`
+Example command: `node index.js acceptance_tests.txt 'http://pelias.dev.mapzen.com'`
 
-example fragment file contents:
+Example fragment file contents:
 ```
 $ head data/nyc_reverse.txt
 /v1/reverse?layers=address&sources=oa,osm&point.lat=40.6783253&point.lon=-74.0003566
@@ -95,4 +95,3 @@ higher concurrency levels can drastically increase the number of requests per
 second measured (this is good!). However, too high of a concurrency level can
 overload a Pelias instance, so depending on the hardware and query type, some
 experimentation of the optimal setting will have to be done.
-
