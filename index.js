@@ -21,21 +21,21 @@ var maxRequests = 1000;
 var slowest_time = 0;
 var slowest_url;
 
-function statusCallback(results, result) {
+function statusCallback(error, result, summaryInfo) {
   if (result.requestElapsed > slowest_time) {
     slowest_time = result.requestElapsed;
     slowest_url = urls[result.requestIndex];
   }
-  if (results.totalRequests == options.maxRequests) {
+  if (summaryInfo.totalRequests == options.maxRequests) {
     return;
   }
 
-  if (results.totalRequests == options.maxRequests -1) {
+  if (summaryInfo.totalRequests == options.maxRequests -1) {
     process.stdout.write("\r");
     return;
   }
 
-  process.stdout.write("\r" + results.totalRequests);
+  process.stdout.write("\r" + summaryInfo.totalRequests);
 }
 
 // read an entire file of urls into an array
