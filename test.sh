@@ -29,16 +29,16 @@ count=1000 \
 ## RUN tests
 
 # reverse
-./k6.bin run tests/reverse_mongolia.js
-./k6.bin run tests/reverse_nyc.js
+./bin/k6 run tests/reverse_mongolia.js
+./bin/k6 run tests/reverse_nyc.js
 
 # structured search
-./k6.bin run tests/structured_nyc.js
-./k6.bin run tests/structured_des_moines.js
+./bin/k6 run tests/structured_nyc.js
+./bin/k6 run tests/structured_des_moines.js
 
 # search
-./k6.bin run tests/search_nyc.js
-./k6.bin run tests/search_des_moines.js
+./bin/k6 run tests/search_nyc.js
+./bin/k6 run tests/search_des_moines.js
 
 # acceptance tests - a good general mix of all types of queries
-./k6.bin run tests/acceptance_tests.js
+./bin/k6 run tests/acceptance_tests.js
