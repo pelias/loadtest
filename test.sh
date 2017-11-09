@@ -19,10 +19,10 @@ node scripts/generateReverseQueries.js > generated_data/reverse_mongolia.js
 
 
 # Parsed CSV data for NYC
-count=1000 \
+time count=1000 \
     filename="./data/city_of_new_york.csv" \
 	node scripts/process_oa_csv.js > generated_data/nyc_oa.js
-count=1000 \
+time count=1000 \
     filename="./data/des_moines.csv" \
 	node scripts/process_oa_csv.js > generated_data/des_moines_oa.js
 
