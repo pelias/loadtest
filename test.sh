@@ -20,12 +20,25 @@ node scripts/generateReverseQueries.js > generated_data/reverse_mongolia.js
 
 # Parsed CSV data for NYC
 count=1000 \
+    filename="./data/city_of_new_york.csv" \
 	node scripts/process_oa_csv.js > generated_data/nyc_oa.js
+count=1000 \
+    filename="./data/des_moines.csv" \
+	node scripts/process_oa_csv.js > generated_data/des_moines_oa.js
 
 ## RUN tests
 
+# reverse
 ./k6.bin run tests/reverse_mongolia.js
 ./k6.bin run tests/reverse_nyc.js
 
+# structured search
 ./k6.bin run tests/structured_nyc.js
+./k6.bin run tests/structured_des_moines.js
+
+# search
 ./k6.bin run tests/search_nyc.js
+./k6.bin run tests/search_des_moines.js
+
+# acceptance tests - a good general mix of all types of queries
+./k6.bin run tests/acceptance_tests.js
