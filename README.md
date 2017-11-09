@@ -82,3 +82,8 @@ These tests use the same addresses as the regular forward search tests, and agai
 
 ### Acceptance Test Suite
 This test uses all URLs found in the Pelias [acceptance-tests](https://github.com/pelias/acceptance-tests). It therefore has nearly complete coverage of Pelias functionality and hopefully can detect when any obscure type of query has become a large bottleneck.
+
+## TODO:
+- Collect output in a way that can be easily fed to more automated tooling
+- Allow configuring VUs and duration for test suites
+- (the endgame) Automatically run a series of tests at different concurrency levels for each test suite and generate a spreadsheet with graphs of concurrency vs latency and concurrency vs throughput
