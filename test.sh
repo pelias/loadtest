@@ -1,5 +1,8 @@
 #!/bin/bash -ex
 
+# print date for easily storing test data
+date
+
 ## generate data needed for tests
 # reverse query centered in a populated area (NYC)
 min_lat=40.56441616034876 \
