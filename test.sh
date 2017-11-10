@@ -29,19 +29,19 @@ time count=1000 \
     filename="./data/des_moines.csv" \
 	node scripts/process_oa_csv.js > generated_data/des_moines_oa.js
 
-## RUN tests
+## run tests
 
 # reverse
-./bin/k6 run tests/reverse_mongolia.js
-./bin/k6 run tests/reverse_nyc.js
+./bin/k6 run -q tests/reverse_mongolia.js
+./bin/k6 run -q tests/reverse_nyc.js
 
 # structured search
-./bin/k6 run tests/structured_nyc.js
-./bin/k6 run tests/structured_des_moines.js
+./bin/k6 run -q tests/structured_nyc.js
+./bin/k6 run -q tests/structured_des_moines.js
 
 # search
-./bin/k6 run tests/search_nyc.js
-./bin/k6 run tests/search_des_moines.js
+./bin/k6 run -q tests/search_nyc.js
+./bin/k6 run -q tests/search_des_moines.js
 
 # acceptance tests - a good general mix of all types of queries
-./bin/k6 run tests/acceptance_tests.js
+./bin/k6 run -q tests/acceptance_tests.js
