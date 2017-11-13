@@ -50,6 +50,13 @@ function parseDurationLine(line) {
   }
 }
 
+function parseThroughputLine(line) {
+  if (line.match('http_reqs')) {
+    const raw_value = /\(([\d\.]+)\/s\)/.exec(line)[1];
+    return parseFloat(raw_value);
+  }
+}
+
 module.exports = function parseK6Output(textInput) {
   const result = {};
 
@@ -57,6 +64,7 @@ module.exports = function parseK6Output(textInput) {
   // assume each type of value will only be in the output once
   textInput.split('\n').forEach((line) => {
     result.duration = parseDurationLine(line) || result.duration;
+    result.throughput = parseThroughputLine(line) || result.throughput;
   });
   return result;
 }

@@ -13,4 +13,10 @@ tape('parseK6Output', (test) => {
     t.equal(actual.duration.p95, 0.27177, 'p95 duration in seconds returned');
     t.end();
   });
+
+  test.test('throughput can be parsed', (t) => {
+    const actual = parseK6Output(exampleInput);
+    t.equal(actual.throughput, 132.4, 'throughput in requests/second is parsed');
+    t.end();
+  });
 });
