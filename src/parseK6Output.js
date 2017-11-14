@@ -1,6 +1,6 @@
 function mapTimingKeys(key) {
   if (key === 'p(90)') {
-    return 'p99';
+    return 'p90';
   } else if (key === 'p(95)') {
     return 'p95';
   } else {
