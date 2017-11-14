@@ -11,7 +11,7 @@ if (!__ENV.API_KEY) {
 
 import data from '../generated_data/acceptance_tests.js'
 
-const vu_count = 20;
+const vu_count = parseInt(__ENV.VU) || 10;
 export let options = {
   duration: "30s",
   vus: vu_count
