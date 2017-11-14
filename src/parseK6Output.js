@@ -53,7 +53,7 @@ function parseDurationLine(line) {
 function parseThroughputLine(line) {
   if (line.match('http_reqs')) {
     const raw_value = /\(([\d\.]+)\/s\)/.exec(line)[1];
-    return parseFloat(raw_value);
+    return round(parseFloat(raw_value), 1);
   }
 }
 
