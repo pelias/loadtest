@@ -15,6 +15,7 @@ export let options = {
   duration: "30s",
   vus: vu_count
 }
+
 function randomInRange(min, max) {
     return Math.random() * (max-min) + min;
 }

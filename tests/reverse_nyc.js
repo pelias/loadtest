@@ -9,26 +9,34 @@ if (!__ENV.API_KEY) {
   console.error("No API_KEY set"); exit(1);
 }
 
-import data from '../generated_data/reverse_nyc.js'
-
 const vu_count = parseInt(__ENV.VU) || 10;
+
 export let options = {
   duration: "30s",
   vus: vu_count
 }
 
+function randomInRange(min, max) {
+    return Math.random() * (max-min) + min;
+}
+
+const nycLatLon = [ 40.7308, -73.9356 ];
+
 export default function() {
-  const data_index = (vu_count * __ITER + __VU) % data.data.length;
+  const latRand = randomInRange(-0.1, 0.1);
+  const lonRand = randomInRange(-0.1, 0.1);
 
-  const query = data.data[data_index];
+  const lat = nycLatLon[0] + latRand;
+  const lon = nycLatLon[1] + lonRand;
 
-  const url = `${__ENV.HOST}${query}&api_key=${__ENV.API_KEY}`;
+  const url = `${__ENV.HOST}${lon}/${lat}`;
   let res = http.get(url);
 
   check(res, {
+    "status was 200 or 429": (r) => (r.status == 200 || r.status == 429),
     "status was 200": (r) => (r.status == 200 || r.status == 304),
     "status was not 429": (r) => (r.status != 429),
-    "status was not 401": (r) => (r.status != 401),
+    "request time under 100ms": (r) => r.timings.duration < 100,
     "request time under 200ms": (r) => r.timings.duration < 200
   });
 }

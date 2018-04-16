@@ -25,10 +25,19 @@ export default function() {
   const url = `${__ENV.HOST}${query}&api_key=${__ENV.API_KEY}`;
   let res = http.get(url);
 
+  if (res.status != 200  && res.status != 429) {
+    console.log(`status ${res.status}`);
+    console.log(url);
+    console.log();
+  }
+
   check(res, {
     "status was 200": (r) => (r.status == 200 || r.status == 304),
     "status was not 429": (r) => (r.status != 429),
+    "status was 200 or 429": (r) => (r.status == 200 || r.status == 429),
+    "status was not 5xx": (r) => (r.status < 500 || r.status >= 600),
     "status was not 401": (r) => (r.status != 401),
+    "status was not 408": (r) => (r.status != 408),
     "request time under 200ms": (r) => r.timings.duration < 200
   });
 }
