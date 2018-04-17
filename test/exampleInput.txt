@@ -1,0 +1,37 @@
+
+          /\      |‾‾|  /‾‾/  /‾/   
+     /\  /  \     |  |_/  /  / /   
+    /  \/    \    |      |  /  ‾‾\  
+   /          \   |  |‾\  \ | (_) | 
+  / __________ \  |__|  \__\ \___/  Welcome to k6 v0.17.1!
+
+  execution: local
+     output: -
+     script: /home/julian/repos/pelias/loadtest/tests/reverse_mongolia.js (js)
+
+   duration: 5s, iterations: 0
+        vus: 20, max: 20
+
+    web ui: http://127.0.0.1:6565/
+
+      done [==========================================================]         5s / 5s
+
+    ✓ status was 200
+    ✓ status was not 429
+    ✓ status was not 401
+    ✗ request time under 200ms
+          14.05% (93/662) 
+
+    checks................: 96.49%
+    data_received.........: 24 kB (4.7 kB/s)
+    data_sent.............: 3.8 kB (767 B/s)
+    http_req_blocked......: avg=2ms max=66.7ms med=2.09µs min=1.07µs p(90)=2.73µs p(95)=3.2µs
+    http_req_connecting...: avg=794.11µs max=26.59ms med=0s min=0s p(90)=0s p(95)=0s
+    http_req_duration.....: avg=145.39ms max=1.4s med=134.86ms min=46.88ms p(90)=215.66ms p(95)=271.77ms
+    http_req_receiving....: avg=128.98µs max=3.02ms med=104.89µs min=66.5µs p(90)=141.19µs p(95)=168.74µs
+    http_req_sending......: avg=19.81µs max=471.2µs med=14.41µs min=8.23µs p(90)=21.57µs p(95)=34.98µs
+    http_req_waiting......: avg=145.24ms max=400.25ms med=134.72ms min=46.62ms p(90)=215.55ms p(95)=271.42ms
+    http_reqs.............: 662 (132.4/s)
+    vus...................: 20
+    vus_max...............: 20
+

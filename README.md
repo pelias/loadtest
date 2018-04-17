@@ -1,97 +1,89 @@
 # Pelias loadtest
 
+This repository contains tools for loadtesting a pelias instance.
+
+It uses the [k6](https://k6.io/) librarfy for loadtesting. Previously, it used
+the [loadtest](https://www.npmjs.com/package/loadtest) NPM module, but that
+module wasn't able to load test over ~400 requests/second, which a
+well-provisioned Pelias instance is easily able to surpass.
+
 ## Usage
 
-`node index.js [file with URL fragments] [endpoint]`
-
-Example command: `node index.js acceptance_tests.txt 'http://pelias.dev.mapzen.com'`
-
-Example fragment file contents:
-```
-$ head data/nyc_reverse.txt
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.6783253&point.lon=-74.0003566
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.8289836&point.lon=-73.8538096
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.6620808&point.lon=-73.8920193
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.7771298&point.lon=-73.7827947
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.6078153&point.lon=-73.9941793
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.6175611&point.lon=-74.0098668
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.7324096&point.lon=-73.8032791
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.7420505&point.lon=-73.9257478
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.7593663&point.lon=-73.7190877
-/v1/reverse?layers=address&sources=oa,osm&point.lat=40.7130021&point.lon=-73.9810227
-```
-
-## Configuration
-
-Be sure to edit `index.js` with a valid Pelias API key (if testing against Mapzen Search).
-
-The concurrency level, and maximum number of queries to run can also be configured.
-
-## How it works
-
-Using the [loadtest](https://github.com/alexfernandez/loadtest) NPM module, run
-a series of queries against a Pelias server. The queries are constructed from
-query fragments and a host name, so the same queries can be run on and compared
-between several different Pelias instances.
-
-## What does it measure?
-
-First, here's some example output:
+The main way to use this repo is to run the full test suite to test a wide variety of queries:
 
 ```
-$ node index.js data/ny_reverse_small.txt 'http://pelias.mapzen.com'
-URL: http://pelias.mapzen.com
-file: data/ny_reverse_small.txt
-count: 1000
-errors: 0
-rps:  134
-50th: 102ms
-90th: 132ms
-99th: 331ms
-max:  472ms
-slowest query: /v1/reverse?layers=address&sources=oa,osm&point.lat=43.3010384&point.lon=-76.4047045
+export API_KEY=<your api KEY if testing a Mapzen Search instance>
+export HOST="http://your-pelias-instance"
+./test.sh
 ```
 
-The output starts with a reminder of what endpoint was hit, and what file was
-used to generate the queries.
+## Example output
 
-After that is more information about the test run
+The [output](https://k6.readme.io/docs/results-output) from K6 is quite nice and thorough, and looks like this:
 
-## Count
-Total number of queries run
+```
 
-## Errors
-Count of non-200 HTTP status codes. Other than this loadtest does nothing with
-the responses from the queries
+          /\      |‾‾|  /‾‾/  /‾/   
+     /\  /  \     |  |_/  /  / /   
+    /  \/    \    |      |  /  ‾‾\  
+   /          \   |  |‾\  \ | (_) | 
+  / __________ \  |__|  \__\ \___/  Welcome to k6 v0.17.1!
 
-## RPS (requests per second)
+  execution: local
+     output: -
+     script: /home/julian/repos/pelias/loadtest/tests/search_des_moines.js (js)
 
-The average number of requests executed per second. This is calculated by
-taking the number of queries, divided by the time elapsed from when the first
-query was sent, to when the last query was returned.
+   duration: 3m0s, iterations: 0
+        vus: 5, max: 5
 
-## 50th, 90th, 99th percentile times
+    web ui: http://127.0.0.1:6565/
 
-Each request is also individually timed, and these are aggregated at the end of
-the test run to calculate percentile response times for individual queries.
+^C      done [==========================================================]      34.8s / 34.8s
 
-## Max response time
-The response time of the single slowest request
+    ✓ status was not 401
+    ✗ request time under 200ms
+          16.45% (124/754) 
+    ✓ status was 200
+    ✓ status was not 429
 
-## Slowest query
+    checks................: 95.89%
+    data_received.........: 6.8 kB (199 B/s)
+    data_sent.............: 866 B (25 B/s)
+    http_req_blocked......: avg=250.91µs max=38.55ms med=2.43µs min=1.38µs p(90)=3.18µs p(95)=3.4µs
+    http_req_connecting...: avg=73.26µs max=11.96ms med=0s min=0s p(90)=0s p(95)=0s
+    http_req_duration.....: avg=230.49ms max=6.89s med=85.2ms min=52.58ms p(90)=348.44ms p(95)=1.36s
+    http_req_receiving....: avg=160.64µs max=4.61ms med=131.35µs min=78.77µs p(90)=180.67µs p(95)=205.1µs
+    http_req_sending......: avg=19.97µs max=119.23µs med=18.78µs min=10.32µs p(90)=24.91µs p(95)=27.52µs
+    http_req_waiting......: avg=230.31ms max=6.89s med=85.07ms min=52.4ms p(90)=348.13ms p(95)=1.36s
+    http_reqs.............: 754 (22.176470588235293/s)
+    vus...................: 5
+    vus_max...............: 5
+```
 
-The query that was run that took the longest (it's the one that had the maximum
-response time listed on the previous line).
+The most important pieces of output are generally the following:
 
-Note: sometimes a query that is normally fast just happens to be run when the
-Pelias instance is under very heavy load, and all responses are delayed, so the
-query listed here may not be worth investigating further.
+* results of any checks (such as status code 200 above)
+* http\_req\_duration metrics: especially p(95). This measures the entire elapsed time of a request (it really should be ordered differently instead of put in the middle)
+* http\_reqs: the total number of requests sent and the average total throughput
+* vus: this is the measure of concurrency in k6, and should match whatever was configured by the tests
 
-### Concurrency
-There is no [parallelism](http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference#1050257)
-in this code itself, since it's running in Node.js, however multiple requests
-are allowed to be in flight at once. On a powerful enough Pelias instance,
-higher concurrency levels can drastically increase the number of requests per
-second measured (this is good!). However, too high of a concurrency level can
-overload a Pelias instance, so depending on the hardware and query type, some
-experimentation of the optimal setting will have to be done.
+## Pelias test suite contents
+
+There are currently several test suites for different types of Pelias requests.
+
+### Reverse Geocoding in NYC and Mongolia
+These tests use randomly generated points within areas corresponding to NYC and a desolate part of Mongolia. The intent is to test reverse geocoding in populated and non-populated areas.
+
+### Forward Search in NYC and Des Moines, Iowa
+These tests use addresses generated from OpenAddresses data in NYC and Des Mones, Iowa. They test regular forward search performance in populated and relatively less populated areas.
+
+### Forward Structured Search in NYC and Des Moines, Iowa
+These tests use the same addresses as the regular forward search tests, and again test search performance in populated and relatively less populated areas, but specifically use the `/v1/search/structured` endpoint.
+
+### Acceptance Test Suite
+This test uses all URLs found in the Pelias [acceptance-tests](https://github.com/pelias/acceptance-tests). It therefore has nearly complete coverage of Pelias functionality and hopefully can detect when any obscure type of query has become a large bottleneck.
+
+## TODO:
+- Collect output in a way that can be easily fed to more automated tooling
+- Allow configuring VUs and duration for test suites
+- (the endgame) Automatically run a series of tests at different concurrency levels for each test suite and generate a spreadsheet with graphs of concurrency vs latency and concurrency vs throughput
