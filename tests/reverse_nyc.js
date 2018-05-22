@@ -6,7 +6,7 @@ if (!__ENV.HOST) {
 }
 
 if (!__ENV.API_KEY) {
-  console.error("No API_KEY set"); exit(1);
+  __ENV.API_KEY="";
 }
 
 const vu_count = parseInt(__ENV.VU) || 10;

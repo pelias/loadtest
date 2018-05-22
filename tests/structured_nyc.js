@@ -6,7 +6,7 @@ if (!__ENV.HOST) {
 }
 
 if (!__ENV.API_KEY) {
-  console.error("No API_KEY set"); exit(1);
+  __ENV.API_KEY="";
 }
 
 import data from '../generated_data/nyc_oa.js'
