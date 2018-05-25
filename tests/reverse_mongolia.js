@@ -28,7 +28,7 @@ export default function() {
   const lat = centerLatLon[0] + latRand;
   const lon = centerLatLon[1] + lonRand;
 
-  const url = `${__ENV.HOST}v1/reverse?point.lat=${lat}&point.lon=${lon}&api_key=${__ENV.API_KEY}`;
+  const url = `${__ENV.HOST}/v1/reverse?point.lat=${lat}&point.lon=${lon}&api_key=${__ENV.API_KEY}`;
   let res = http.get(url);
 
   check(res, {

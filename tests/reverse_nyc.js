@@ -29,7 +29,7 @@ export default function() {
   const lat = nycLatLon[0] + latRand;
   const lon = nycLatLon[1] + lonRand;
 
-  const url = `${__ENV.HOST}v1/reverse?point.lon=${lon}&point.lat=${lat}&api_key=${__ENV.API_KEY}`;
+  const url = `${__ENV.HOST}/v1/reverse?point.lon=${lon}&point.lat=${lat}&api_key=${__ENV.API_KEY}`;
   let res = http.get(url);
 
   check(res, {
