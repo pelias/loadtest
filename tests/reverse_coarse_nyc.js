@@ -36,6 +36,7 @@ export default function() {
     "status was 200": (r) => (r.status == 200 || r.status == 304),
     "status was not 429": (r) => (r.status != 429),
     "status was not 401": (r) => (r.status != 401),
+    "request time under 100ms": (r) => r.timings.duration < 100,
     "request time under 200ms": (r) => r.timings.duration < 200
   });
 }
