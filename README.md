@@ -12,9 +12,10 @@ well-provisioned Pelias instance is easily able to surpass.
 The main way to use this repo is to run the full test suite to test a wide variety of queries:
 
 ```
-export API_KEY=<your api KEY if testing a paid instance>
-export HOST="http://your-pelias-instance" # Please ensure this DOES NOT includes a trailing slash
-./test.sh
+$ npm install
+$ export API_KEY=<your api KEY if testing a paid instance>
+$ export HOST="http://your-pelias-instance" # Please ensure this DOES NOT includes a trailing slash
+$ ./test.sh
 ```
 
 ## Example output
