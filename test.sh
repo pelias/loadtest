@@ -25,10 +25,12 @@ vus=${vus:-15}
 
 ## search
 ./bin/k6 run -u $vus -d $duration  tests/search_nyc.js
+./bin/k6 run -u $vus -d $duration  tests/search_focus_nyc.js
 ./bin/k6 run -u $vus -d $duration  tests/search_des_moines.js
 
 ## autocomplete
 ./bin/k6 run -u $vus -d $duration  tests/autocomplete_nyc.js
+./bin/k6 run -u $vus -d $duration  tests/autocomplete_focus_nyc.js
 
 ## acceptance tests - a good general mix of all types of queries
 ./bin/k6 run -u $vus -d $duration  tests/acceptance_tests.js
