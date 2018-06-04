@@ -35,5 +35,8 @@ vus=${vus:-15}
 ## acceptance tests - a good general mix of all types of queries
 ./bin/k6 run -u $vus -d $duration  tests/acceptance_tests.js
 
+# place endpoing: statically request records by ID
+./bin/k6 run -u $vus -d $duration  tests/place.js
+
 ## Basic HTTP request that does no geocoding and should be extremely fast
 ./bin/k6 run -u $vus -d $duration  tests/http_basic.js
