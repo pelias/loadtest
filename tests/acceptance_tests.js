@@ -32,12 +32,13 @@ export default function() {
   }
 
   check(res, {
-    "status was 200": (r) => (r.status == 200 || r.status == 304),
-    "status was not 429": (r) => (r.status != 429),
+    "request time under 100ms": (r) => r.timings.duration < 100,
+    "request time under 200ms": (r) => r.timings.duration < 200,
     "status was 200 or 429": (r) => (r.status == 200 || r.status == 429),
-    "status was not 5xx": (r) => (r.status < 500 || r.status >= 600),
+    "status was 200": (r) => (r.status == 200 || r.status == 304),
     "status was not 401": (r) => (r.status != 401),
     "status was not 408": (r) => (r.status != 408),
-    "request time under 200ms": (r) => r.timings.duration < 200
+    "status was not 429": (r) => (r.status != 429),
+    "status was not 5xx": (r) => (r.status < 500 || r.status >= 600)
   });
 }
