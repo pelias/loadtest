@@ -31,7 +31,7 @@ export default function() {
   const length = Math.max(1,Math.floor(Math.random() * Math.floor(full_input.length)));
   const input = full_input.substring(0, length);
 
-  const query = `/v1/autocomplete?text=${input}`
+  const query = `/v1/autocomplete?text=${input}&api_key=${__ENV.API_KEY}`
 
   const url = `${__ENV.HOST}${query}`;
   let res = http.get(url);
