@@ -37,7 +37,7 @@ export default function() {
   const address = `${data_row['NUMBER']}+${data_row['STREET'].replace(/ /g, '+')}`;
   const locality = "new+york";
   const full_input =`${address},+${locality},+ny,+usa`
-  const length = Math.floor(Math.random() * Math.floor(full_input.length));
+  const length = Math.max(1,Math.floor(Math.random() * Math.floor(full_input.length)));
   const input = full_input.substring(0, length);
 
   const query = `/v1/autocomplete?text=${input}&focus.point.lat=${lat}&focus.point.lon=${lon}`
