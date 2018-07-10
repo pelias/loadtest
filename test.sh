@@ -18,6 +18,7 @@ vus=${vus:-15}
 ./bin/k6 run -u $vus -d $duration  tests/reverse_nyc.js
 ./bin/k6 run -u $vus -d $duration  tests/reverse_mongolia.js
 ./bin/k6 run -u $vus -d $duration  tests/reverse_portland.js
+./bin/k6 run -u $vus -d $duration  tests/reverse_world.js
 
 # structured search
 ./bin/k6 run -u $vus -d $duration  tests/structured_nyc.js
