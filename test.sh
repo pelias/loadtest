@@ -18,32 +18,32 @@ vus=${vus:-15}
 
 # reverse
 ./bin/k6 run -u $vus -d $duration  tests/reverse_sydney.js
-./bin/k6 run -u $vus -d $duration  tests/reverse_coarse_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/reverse_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/reverse_mongolia.js
-./bin/k6 run -u $vus -d $duration  tests/reverse_portland.js
-./bin/k6 run -u $vus -d $duration  tests/reverse_world.js
+#./bin/k6 run -u $vus -d $duration  tests/reverse_coarse_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/reverse_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/reverse_mongolia.js
+#./bin/k6 run -u $vus -d $duration  tests/reverse_portland.js
+#./bin/k6 run -u $vus -d $duration  tests/reverse_world.js
 
 # structured search
-./bin/k6 run -u $vus -d $duration  tests/structured_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/structured_des_moines.js
+#./bin/k6 run -u $vus -d $duration  tests/structured_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/structured_des_moines.js
 
 ## search
 ./bin/k6 run -u $vus -d $duration  tests/search_au.js
-./bin/k6 run -u $vus -d $duration  tests/search_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/search_focus_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/search_des_moines.js
+#./bin/k6 run -u $vus -d $duration  tests/search_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/search_focus_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/search_des_moines.js
 
 ## autocomplete
-./bin/k6 run -u $vus -d $duration  tests/autocomplete_au.js
-./bin/k6 run -u $vus -d $duration  tests/autocomplete_nyc.js
-./bin/k6 run -u $vus -d $duration  tests/autocomplete_focus_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/autocomplete_au.js
+#./bin/k6 run -u $vus -d $duration  tests/autocomplete_nyc.js
+#./bin/k6 run -u $vus -d $duration  tests/autocomplete_focus_nyc.js
 
 ## acceptance tests - a good general mix of all types of queries
-./bin/k6 run -u $vus -d $duration  tests/acceptance_tests.js
+#./bin/k6 run -u $vus -d $duration  tests/acceptance_tests.js
 
 # place endpoing: statically request records by ID
-./bin/k6 run -u $vus -d $duration  tests/place.js
+#./bin/k6 run -u $vus -d $duration  tests/place.js
 
 ## Basic HTTP request that does no geocoding and should be extremely fast
-./bin/k6 run -u $vus -d $duration  tests/http_basic.js
+#./bin/k6 run -u $vus -d $duration  tests/http_basic.js
