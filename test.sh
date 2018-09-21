@@ -35,7 +35,7 @@ vus=${vus:-15}
 #./bin/k6 run -u $vus -d $duration  tests/search_des_moines.js
 
 ## autocomplete
-#./bin/k6 run -u $vus -d $duration  tests/autocomplete_au.js
+./bin/k6 run -u $vus -d $duration  tests/autocomplete_au.js
 #./bin/k6 run -u $vus -d $duration  tests/autocomplete_nyc.js
 #./bin/k6 run -u $vus -d $duration  tests/autocomplete_focus_nyc.js
 
