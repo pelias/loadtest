@@ -9,7 +9,7 @@ if (!__ENV.API_KEY) {
   __ENV.API_KEY="";
 }
 
-import data from '../generated_data/australia.js'
+import data from '../generated_data/australia_oa.js'
 
 const vu_count = parseInt(__ENV.VU) || 10;
 export let options = {
