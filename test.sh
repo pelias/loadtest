@@ -9,7 +9,7 @@ time count=1000 \
      filename="./data/des_moines.csv" \
      node scripts/process_oa_csv.js > generated_data/des_moines_oa.js
 time count=10000 \
-     filename="./data/au_countrywide.csv" \
+     filename="./data/australia.csv" \
      node scripts/process_oa_csv.js > generated_data/australia_oa.js
 
 # set defaults for duration and concurrency, allow overriding
