@@ -15,6 +15,7 @@ vus=${vus:-15}
 
 # reverse
 ./bin/k6 run -u $vus -d $duration  tests/reverse_coarse_nyc.js
+./bin/k6 run -u $vus -d $duration  tests/reverse_non_coarse_nyc.js
 ./bin/k6 run -u $vus -d $duration  tests/reverse_nyc.js
 ./bin/k6 run -u $vus -d $duration  tests/reverse_mongolia.js
 ./bin/k6 run -u $vus -d $duration  tests/reverse_portland.js
