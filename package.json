@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "tap-dot": "^1.0.5",
-    "tape": "^4.8.0"
+    "tape": "^4.13.3"
   },
   "scripts": {
     "test": "node test/test.js | tap-dot"
