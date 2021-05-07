@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "csv-parse": "^4.4.6",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "tap-dot": "^1.0.5",
